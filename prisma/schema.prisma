@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  passwordResets PasswordReset[]
+  blogsCreated   Blog[] @relation("BlogCreatedBy")
+  blogsUpdated   Blog[] @relation("BlogUpdatedBy")
+  blogsDeleted   Blog[] @relation("BlogDeletedBy")
+}
+
+model Blog {
+  id          Int          @id @default(autoincrement())
+  judul       String
+  deskripsi   String       @db.Text
+  gambar      String?
+  kategori    BlogKategori
+  status      BlogStatus   @default(unpublished)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  deletedAt   DateTime?
+  createdBy   Int?
+  updatedBy   Int?
+  deletedBy   Int?
+
+  createdByUser User? @relation("BlogCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser User? @relation("BlogUpdatedBy", fields: [updatedBy], references: [id])
+  deletedByUser User? @relation("BlogDeletedBy", fields: [deletedBy], references: [id])
+}
+
+model PasswordReset {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+enum BlogKategori {
+  sport
+  art
+  news
+  education
+}
+
+enum BlogStatus {
+  published
+  unpublished
+}
