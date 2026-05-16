@@ -33,16 +33,16 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get("search") ?? "";
     const dateFrom = searchParams.get("dateFrom");
     const dateTo = searchParams.get("dateTo");
-    const sortBy = searchParams.get("sortBy") ?? "createdAt";
+    const sortBy = searchParams.get("sortBy") ?? "created_at";
     const sortOrder = (searchParams.get("sortOrder") ?? "desc") as "asc" | "desc";
     const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
 
-    const allowedSortFields = ["judul", "kategori", "status", "createdAt"];
-    const safeSortBy = allowedSortFields.includes(sortBy) ? sortBy : "createdAt";
+    const allowedSortFields = ["judul", "kategori", "status", "created_at"];
+    const safeSortBy = allowedSortFields.includes(sortBy) ? sortBy : "created_at";
     const safeSortOrder: "asc" | "desc" = sortOrder === "asc" ? "asc" : "desc";
 
     const where: Prisma.BlogWhereInput = {
-      deletedAt: null,
+      deleted_at: null,
     };
 
     if (search) {
@@ -53,14 +53,14 @@ export async function GET(request: NextRequest) {
     }
 
     if (dateFrom || dateTo) {
-      where.createdAt = {};
+      where.created_at = {};
       if (dateFrom) {
-        (where.createdAt as Prisma.DateTimeFilter).gte = new Date(dateFrom);
+        (where.created_at as Prisma.DateTimeFilter).gte = new Date(dateFrom);
       }
       if (dateTo) {
         const toDate = new Date(dateTo);
         toDate.setHours(23, 59, 59, 999);
-        (where.createdAt as Prisma.DateTimeFilter).lte = toDate;
+        (where.created_at as Prisma.DateTimeFilter).lte = toDate;
       }
     }
 
@@ -114,8 +114,8 @@ export async function POST(request: NextRequest) {
         kategori,
         gambar: gambar ?? null,
         status: "unpublished",
-        createdBy: userId,
-        updatedBy: userId,
+        created_by: userId,
+        updated_by: userId,
       },
     });
 

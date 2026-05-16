@@ -15,8 +15,8 @@ interface Blog {
   gambar: string | null;
   kategori: string;
   status: "published" | "unpublished";
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 async function getBlog(id: string): Promise<Blog | null> {
@@ -79,7 +79,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
               Tanggal Dibuat
             </p>
             <p className="text-gray-800">
-              {new Date(blog.createdAt).toLocaleDateString("id-ID", {
+              {new Date(blog.created_at).toLocaleDateString("id-ID", {
                 day: "2-digit",
                 month: "long",
                 year: "numeric",

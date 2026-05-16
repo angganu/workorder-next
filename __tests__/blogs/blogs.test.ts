@@ -28,7 +28,7 @@ interface Blog {
   gambar: string | null;
   kategori: BlogKategori;
   status: BlogStatus;
-  createdAt: Date;
+  created_at: Date;
 }
 
 // ─── Zod schema (mirrors API) ─────────────────────────────────────────────────
@@ -69,18 +69,18 @@ function filterBlogs(
 
   // Date range filter
   if (opts.dateFrom) {
-    result = result.filter((b) => b.createdAt >= opts.dateFrom!);
+    result = result.filter((b) => b.created_at >= opts.dateFrom!);
   }
   if (opts.dateTo) {
     const to = new Date(opts.dateTo);
     to.setHours(23, 59, 59, 999);
-    result = result.filter((b) => b.createdAt <= to);
+    result = result.filter((b) => b.created_at <= to);
   }
 
   const total = result.length;
 
   // Sort
-  const sortBy = opts.sortBy ?? "createdAt";
+  const sortBy = opts.sortBy ?? "created_at";
   const sortOrder = opts.sortOrder ?? "desc";
   result.sort((a, b) => {
     const av = a[sortBy];
@@ -115,7 +115,7 @@ function createBlog(
     gambar: gambar ?? null,
     kategori,
     status: "unpublished",
-    createdAt: new Date(),
+    created_at: new Date(),
   };
   store.set(blog.id, blog);
   return { success: true, blog };
@@ -181,7 +181,7 @@ const blogArb = (id: number): fc.Arbitrary<Blog> =>
     gambar: fc.option(fc.string({ minLength: 1, maxLength: 100 }), { nil: null }),
     kategori: kategoriArb,
     status: statusArb,
-    createdAt: fc.date({ min: new Date("2020-01-01"), max: new Date("2025-12-31") }),
+    created_at: fc.date({ min: new Date("2020-01-01"), max: new Date("2025-12-31") }),
   });
 
 const blogsArb = fc
@@ -240,7 +240,7 @@ describe("Property 11: Blog search filter correctness", () => {
 
 describe("Property 12: Blog date range filter correctness", () => {
   // Feature: admin-dashboard, Property 12: Blog date range filter correctness
-  it("date range filter should return only blogs with createdAt within [from, to]", () => {
+  it("date range filter should return only blogs with created_at within [from, to]", () => {
     fc.assert(
       fc.property(
         blogsArb,
@@ -252,7 +252,7 @@ describe("Property 12: Blog date range filter correctness", () => {
           const { data } = filterBlogs(blogs, { dateFrom, dateTo });
           const to = new Date(dateTo);
           to.setHours(23, 59, 59, 999);
-          return data.every((b) => b.createdAt >= dateFrom && b.createdAt <= to);
+          return data.every((b) => b.created_at >= dateFrom && b.created_at <= to);
         }
       ),
       { numRuns: 100 }
@@ -268,7 +268,7 @@ describe("Property 13: Blog sort correctness", () => {
     fc.assert(
       fc.property(
         nonEmptyBlogsArb,
-        fc.constantFrom<keyof Blog>("judul", "kategori", "status", "createdAt"),
+        fc.constantFrom<keyof Blog>("judul", "kategori", "status", "created_at"),
         (blogs, sortBy) => {
           const { data } = filterBlogs(blogs, { sortBy, sortOrder: "asc", page: 1 });
           for (let i = 0; i < data.length - 1; i++) {
@@ -285,7 +285,7 @@ describe("Property 13: Blog sort correctness", () => {
     fc.assert(
       fc.property(
         nonEmptyBlogsArb,
-        fc.constantFrom<keyof Blog>("judul", "kategori", "status", "createdAt"),
+        fc.constantFrom<keyof Blog>("judul", "kategori", "status", "created_at"),
         (blogs, sortBy) => {
           const { data } = filterBlogs(blogs, { sortBy, sortOrder: "desc", page: 1 });
           for (let i = 0; i < data.length - 1; i++) {

@@ -20,7 +20,7 @@ interface Blog {
   gambar: string | null;
   kategori: BlogKategori;
   status: BlogStatus;
-  createdAt: string;
+  created_at: string;
 }
 
 function BlogDetailView({ blog }: { blog: Blog }) {
@@ -31,7 +31,7 @@ function BlogDetailView({ blog }: { blog: Blog }) {
       <p data-testid="blog-kategori">{blog.kategori}</p>
       <p data-testid="blog-deskripsi">{blog.deskripsi}</p>
       <p data-testid="blog-created-at">
-        {new Date(blog.createdAt).toLocaleDateString("id-ID", {
+        {new Date(blog.created_at).toLocaleDateString("id-ID", {
           day: "2-digit",
           month: "long",
           year: "numeric",
@@ -60,7 +60,7 @@ const blogArb: fc.Arbitrary<Blog> = fc.record({
   ),
   kategori: kategoriArb,
   status: statusArb,
-  createdAt: fc
+  created_at: fc
     .date({ min: new Date("2020-01-01"), max: new Date("2025-12-31") })
     .map((d) => d.toISOString()),
 });
@@ -84,14 +84,14 @@ describe("Property 28: Blog detail page displays all required fields", () => {
         const statusEl = view.getByTestId("blog-status");
         const kategoriEl = view.getByTestId("blog-kategori");
         const deskripsiEl = view.getByTestId("blog-deskripsi");
-        const createdAtEl = view.getByTestId("blog-created-at");
+        const created_atEl = view.getByTestId("blog-created-at");
 
         // All required fields must be rendered in the DOM
         expect(judulEl).toBeInTheDocument();
         expect(statusEl).toBeInTheDocument();
         expect(kategoriEl).toBeInTheDocument();
         expect(deskripsiEl).toBeInTheDocument();
-        expect(createdAtEl).toBeInTheDocument();
+        expect(created_atEl).toBeInTheDocument();
 
         // Content must match (using textContent for whitespace-safe comparison)
         expect(judulEl.textContent).toBe(blog.judul);

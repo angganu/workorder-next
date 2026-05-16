@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       prisma.user.count({ where }),
       prisma.user.findMany({
         where,
-        orderBy: { createdAt: "desc" },
+        orderBy: { created_at: "desc" },
         skip: (page - 1) * PAGE_SIZE,
         take: PAGE_SIZE,
         select: {
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
           name: true,
           email: true,
           avatar: true,
-          createdAt: true,
+          created_at: true,
         },
       }),
     ]);
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
     const totalPages = Math.ceil(total / PAGE_SIZE);
     const formattedData = data.map((u) => ({
       ...u,
-      createdAt: u.createdAt.toISOString(),
+      created_at: u.created_at.toISOString(),
     }));
 
     return NextResponse.json(
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
         email,
         password,
       },
-      select: { id: true, name: true, email: true, createdAt: true },
+      select: { id: true, name: true, email: true, created_at: true },
     });
 
     return NextResponse.json({ message: "User berhasil dibuat", user }, { status: 201 });

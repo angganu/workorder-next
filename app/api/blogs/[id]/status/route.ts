@@ -25,7 +25,7 @@ export async function PATCH(
       return NextResponse.json({ error: "ID tidak valid" }, { status: 400 });
     }
 
-    const existing = await prisma.blog.findUnique({ where: { id, deletedAt: null } });
+    const existing = await prisma.blog.findUnique({ where: { id, deleted_at: null } });
     if (!existing) {
       return NextResponse.json({ error: "Blog tidak ditemukan" }, { status: 404 });
     }
@@ -34,7 +34,7 @@ export async function PATCH(
 
     const updated = await prisma.blog.update({
       where: { id },
-      data: { status: newStatus, updatedBy: userId },
+      data: { status: newStatus, updated_by: userId },
     });
 
     return NextResponse.json(

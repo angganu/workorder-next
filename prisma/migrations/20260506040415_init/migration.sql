@@ -5,8 +5,8 @@ CREATE TABLE `User` (
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
     `avatar` VARCHAR(191) NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -20,12 +20,12 @@ CREATE TABLE `Blog` (
     `gambar` VARCHAR(191) NULL,
     `kategori` ENUM('sport', 'art', 'news', 'education') NOT NULL,
     `status` ENUM('published', 'unpublished') NOT NULL DEFAULT 'unpublished',
-    `createdBy` INTEGER NULL,
-    `updatedBy` INTEGER NULL,
-    `deletedBy` INTEGER NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
-    `deletedAt` DATETIME(3) NULL,
+    `created_by` INTEGER NULL,
+    `updated_by` INTEGER NULL,
+    `deleted_by` INTEGER NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
+    `deleted_at` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -36,7 +36,7 @@ CREATE TABLE `PasswordReset` (
     `userId` INTEGER NOT NULL,
     `token` VARCHAR(191) NOT NULL,
     `expiresAt` DATETIME(3) NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `PasswordReset_token_key`(`token`),
     PRIMARY KEY (`id`)

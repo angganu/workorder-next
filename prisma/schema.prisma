@@ -13,8 +13,8 @@ model User {
   email     String   @unique
   password  String
   avatar    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updated_at
 
   passwordResets PasswordReset[]
   blogsCreated   Blog[] @relation("BlogCreatedBy")
@@ -29,16 +29,16 @@ model Blog {
   gambar      String?
   kategori    BlogKategori
   status      BlogStatus   @default(unpublished)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  deletedAt   DateTime?
-  createdBy   Int?
-  updatedBy   Int?
-  deletedBy   Int?
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @updated_at
+  deleted_at   DateTime?
+  created_by   Int?
+  updated_by   Int?
+  deleted_by   Int?
 
-  createdByUser User? @relation("BlogCreatedBy", fields: [createdBy], references: [id])
-  updatedByUser User? @relation("BlogUpdatedBy", fields: [updatedBy], references: [id])
-  deletedByUser User? @relation("BlogDeletedBy", fields: [deletedBy], references: [id])
+  created_byUser User? @relation("BlogCreatedBy", fields: [created_by], references: [id])
+  updated_byUser User? @relation("BlogUpdatedBy", fields: [updated_by], references: [id])
+  deleted_byUser User? @relation("BlogDeletedBy", fields: [deleted_by], references: [id])
 }
 
 model PasswordReset {
@@ -46,7 +46,7 @@ model PasswordReset {
   userId    Int
   token     String   @unique
   expiresAt DateTime
-  createdAt DateTime @default(now())
+  created_at DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
 }

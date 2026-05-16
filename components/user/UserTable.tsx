@@ -9,7 +9,7 @@ interface User {
   name: string;
   email: string;
   avatar: string | null;
-  createdAt: string;
+  created_at: string;
 }
 
 interface UserListResponse {
@@ -147,7 +147,7 @@ export default function UserTable() {
                     <td className="px-4 py-3 font-medium text-gray-800">{user.name}</td>
                     <td className="px-4 py-3 text-gray-600">{user.email}</td>
                     <td className="px-4 py-3 text-gray-600">
-                      {new Date(user.createdAt).toLocaleDateString("id-ID", {
+                      {new Date(user.created_at).toLocaleDateString("id-ID", {
                         day: "2-digit",
                         month: "short",
                         year: "numeric",

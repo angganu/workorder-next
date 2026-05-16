@@ -11,8 +11,8 @@ interface User {
   name: string;
   email: string;
   avatar: string | null;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 async function getUser(id: string): Promise<User | null> {
@@ -61,7 +61,7 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
               Tanggal Dibuat
             </p>
             <p className="text-gray-800">
-              {new Date(user.createdAt).toLocaleDateString("id-ID", {
+              {new Date(user.created_at).toLocaleDateString("id-ID", {
                 day: "2-digit",
                 month: "long",
                 year: "numeric",

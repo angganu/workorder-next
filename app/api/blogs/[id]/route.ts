@@ -35,7 +35,7 @@ export async function GET(
       return NextResponse.json({ error: "ID tidak valid" }, { status: 400 });
     }
 
-    const blog = await prisma.blog.findUnique({ where: { id, deletedAt: null } });
+    const blog = await prisma.blog.findUnique({ where: { id, deleted_at: null } });
     if (!blog) {
       return NextResponse.json({ error: "Blog tidak ditemukan" }, { status: 404 });
     }
@@ -63,7 +63,7 @@ export async function PUT(
       return NextResponse.json({ error: "ID tidak valid" }, { status: 400 });
     }
 
-    const existing = await prisma.blog.findUnique({ where: { id, deletedAt: null } });
+    const existing = await prisma.blog.findUnique({ where: { id, deleted_at: null } });
     if (!existing) {
       return NextResponse.json({ error: "Blog tidak ditemukan" }, { status: 404 });
     }
@@ -88,7 +88,7 @@ export async function PUT(
         deskripsi,
         kategori,
         gambar: gambar !== undefined ? gambar : existing.gambar,
-        updatedBy: userId,
+        updated_by: userId,
       },
     });
 
@@ -115,7 +115,7 @@ export async function DELETE(
       return NextResponse.json({ error: "ID tidak valid" }, { status: 400 });
     }
 
-    const existing = await prisma.blog.findUnique({ where: { id, deletedAt: null } });
+    const existing = await prisma.blog.findUnique({ where: { id, deleted_at: null } });
     if (!existing) {
       return NextResponse.json({ error: "Blog tidak ditemukan" }, { status: 404 });
     }
@@ -123,8 +123,8 @@ export async function DELETE(
     await prisma.blog.update({
       where: { id },
       data: {
-        deletedAt: new Date(),
-        deletedBy: userId,
+        deleted_at: new Date(),
+        deleted_by: userId,
       },
     });
 

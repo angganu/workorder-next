@@ -10,7 +10,7 @@ import DeleteDialog from "./DeleteDialog";
 
 type BlogStatus = "published" | "unpublished";
 type BlogKategori = "sport" | "art" | "news" | "education";
-type SortField = "judul" | "kategori" | "status" | "createdAt";
+type SortField = "judul" | "kategori" | "status" | "created_at";
 
 interface Blog {
   id: number;
@@ -19,7 +19,7 @@ interface Blog {
   gambar: string | null;
   kategori: BlogKategori;
   status: BlogStatus;
-  createdAt: string;
+  created_at: string;
 }
 
 interface BlogListResponse {
@@ -42,7 +42,7 @@ export default function BlogTable() {
      new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
      new Date(),
    ]);
-   const [sortBy, setSortBy] = useState<SortField>("createdAt");
+   const [sortBy, setSortBy] = useState<SortField>("created_at");
    const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const [loading, setLoading] = useState(false);
@@ -227,9 +227,9 @@ export default function BlogTable() {
                 </th>
                 <th
                   className="px-4 py-3 text-left font-medium text-gray-600 cursor-pointer hover:text-gray-900 select-none"
-                  onClick={() => handleSort("createdAt")}
+                  onClick={() => handleSort("created_at")}
                 >
-                  Tanggal Dibuat <SortIcon field="createdAt" />
+                  Tanggal Dibuat <SortIcon field="created_at" />
                 </th>
                 <th className="px-4 py-3 text-left font-medium text-gray-600">Aksi</th>
               </tr>
@@ -259,7 +259,7 @@ export default function BlogTable() {
                       <StatusBadge status={blog.status} />
                     </td>
                     <td className="px-4 py-3 text-gray-600">
-                      {new Date(blog.createdAt).toLocaleDateString("id-ID", {
+                      {new Date(blog.created_at).toLocaleDateString("id-ID", {
                         day: "2-digit",
                         month: "short",
                         year: "numeric",

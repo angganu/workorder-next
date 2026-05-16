@@ -39,8 +39,8 @@ export async function GET(
         name: true,
         email: true,
         avatar: true,
-        createdAt: true,
-        updatedAt: true,
+        created_at: true,
+        updated_at: true,
       },
     });
     if (!user) {
@@ -48,7 +48,7 @@ export async function GET(
     }
 
     return NextResponse.json(
-      { ...user, createdAt: user.createdAt.toISOString(), updatedAt: user.updatedAt.toISOString() },
+      { ...user, created_at: user.created_at.toISOString(), updated_at: user.updated_at.toISOString() },
       { status: 200 }
     );
   } catch (error) {
@@ -97,7 +97,7 @@ export async function PUT(
     const updated = await prisma.user.update({
       where: { id },
       data: updateData,
-      select: { id: true, name: true, email: true, createdAt: true },
+      select: { id: true, name: true, email: true, created_at: true },
     });
 
     return NextResponse.json({ message: "User berhasil diperbarui", user: updated }, { status: 200 });

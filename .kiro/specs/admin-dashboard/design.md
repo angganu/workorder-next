@@ -113,8 +113,8 @@ model User {
   email     String   @unique
   password  String
   avatar    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updated_at
 
   passwordResets PasswordReset[]
 }
@@ -126,8 +126,8 @@ model Blog {
   gambar    String?
   kategori  BlogKategori
   status    BlogStatus   @default(unpublished)
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updated_at
 }
 
 model PasswordReset {
@@ -135,7 +135,7 @@ model PasswordReset {
   userId    Int
   token     String   @unique
   expiresAt DateTime
-  createdAt DateTime @default(now())
+  created_at DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
 }
@@ -265,7 +265,7 @@ Token disimpan di HTTP-only cookie bernama `auth_token` dengan `SameSite=Strict`
 
 ### Property 12: Blog date range filter correctness
 
-*For any* date range `[from, to]` and list of blogs, the date filter should return only blogs where `createdAt` falls within the range `[from, to]` inclusive.
+*For any* date range `[from, to]` and list of blogs, the date filter should return only blogs where `created_at` falls within the range `[from, to]` inclusive.
 
 **Validates: Requirements 7.3**
 
