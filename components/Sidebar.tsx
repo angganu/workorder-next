@@ -19,6 +19,14 @@ const navLinks: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: "⊞" },
   { href: "/dashboard/blogs", label: "Blogs", icon: "✎" },
   {
+    label: "Companies",
+    icon: "🏢",
+    children: [
+      { href: "/dashboard/companies", label: "Companies", icon: "🏭" },
+      { href: "/dashboard/department", label: "Department", icon: "🗂" },
+    ],
+  },
+  {
     label: "Administrator",
     icon: "⚙",
     children: [

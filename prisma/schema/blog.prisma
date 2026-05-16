@@ -1,0 +1,30 @@
+model Blog {
+  id         Int          @id @default(autoincrement())
+  judul      String
+  deskripsi  String       @db.Text
+  gambar     String?
+  kategori   BlogKategori
+  status     BlogStatus   @default(unpublished)
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+  deleted_at DateTime?
+  created_by Int?
+  updated_by Int?
+  deleted_by Int?
+
+  created_byUser User? @relation("BlogCreatedBy", fields: [created_by], references: [id])
+  updated_byUser User? @relation("BlogUpdatedBy", fields: [updated_by], references: [id])
+  deleted_byUser User? @relation("BlogDeletedBy", fields: [deleted_by], references: [id])
+}
+
+enum BlogKategori {
+  sport
+  art
+  news
+  education
+}
+
+enum BlogStatus {
+  published
+  unpublished
+}
